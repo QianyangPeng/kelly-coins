@@ -308,5 +308,5 @@ All previous candidates done. Good next directions:
 Next start here:
 - Watch the GitHub Pages workflow after pushing. The expected URL is
   `https://qianyangpeng.github.io/kelly-coins/`.
-- After Pages is live, add a Kelly Coins project card to the personal homepage repo
-  linking to `https://qianyangpeng.github.io/kelly-coins/`.
+- Personal homepage now has a Kelly Coins project card linking to
+  `https://qianyangpeng.github.io/kelly-coins/`.
