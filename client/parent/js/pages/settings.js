@@ -21,6 +21,7 @@ import {
 } from '../api.js';
 import { showToast } from '../components/toast.js';
 import { confirm } from '../components/modal.js';
+import { parentPath } from '../../../shared/paths.js';
 
 const NOTIFY_KEY = 'parent-notify-daily';
 
@@ -288,7 +289,7 @@ export default {
     container.innerHTML = reports.map(r => {
       const name = r.filename || r.name || '';
       const time = r.created_at || r.mtime || '';
-      const url = r.url || `/parent/reports/${name}`;
+      const url = r.url || parentPath(`/reports/${name}`);
       return `
         <div class="settings-list-item">
           <div class="settings-list-info">

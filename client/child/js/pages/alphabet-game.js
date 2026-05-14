@@ -42,7 +42,7 @@ const LETTER_WORDS = {
 
 function illustrationFor(meta) {
   if (meta.file) {
-    return `<img src="/child/assets/icons/alphabet/${meta.file}.png" alt="${meta.word}" class="alpha-card__word-img"
+    return `<img src="${window.kcChildPath(`/assets/icons/alphabet/${meta.file}.png`)}" alt="${meta.word}" class="alpha-card__word-img"
               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
             <div class="alpha-card__word-emoji" style="display:none">${meta.emoji || '✨'}</div>`;
   }

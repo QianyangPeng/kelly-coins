@@ -6,6 +6,7 @@
 import { getTasks, createTask, updateTask } from '../api.js';
 import { showToast } from '../components/toast.js';
 import { pickIcon, iconThumbHtml } from '../components/icon-picker.js';
+import { childPath } from '../../../shared/paths.js';
 
 let tasks = [];
 // Draft icon_file for the "add new task" form, assigned via the picker.
@@ -115,7 +116,7 @@ export default {
     draftIconFile = key;
     const preview = document.getElementById('task-new-icon-preview');
     if (preview) {
-      preview.innerHTML = `<img src="/child/assets/icons/tasks/${key}.png" alt="" style="width:24px;height:24px;vertical-align:middle;background:#FFF7EC;border-radius:4px;padding:2px">`;
+      preview.innerHTML = `<img src="${childPath(`/assets/icons/tasks/${key}.png`)}" alt="" style="width:24px;height:24px;vertical-align:middle;background:#FFF7EC;border-radius:4px;padding:2px">`;
     }
   },
 

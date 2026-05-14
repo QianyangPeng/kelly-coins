@@ -188,7 +188,9 @@ export const homePage = {
     stateUnsub = subscribe('home-skin-fab', updateFab);
 
     // Initial fetches
-    fetch('/api/weather').then(r => r.json()).then(updateWeather).catch(() => {});
+    if (!window.kcStaticMode()) {
+      fetch('/api/weather').then(r => r.json()).then(updateWeather).catch(() => {});
+    }
     loadStreak();
     loadDailyQuest();
     loadGoal();
@@ -284,6 +286,7 @@ function announceDate() {
 
 async function announceWeather() {
   try {
+    if (window.kcStaticMode()) return;
     const weather = await (await fetch('/api/weather')).json();
     const conditionText = {
       clear:  weather.is_day ? '晴天' : '晴朗的夜晚',

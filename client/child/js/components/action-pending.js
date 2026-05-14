@@ -41,7 +41,7 @@ function mountOverlay(action) {
   rootEl = document.createElement('div');
   rootEl.className = 'action-pending';
   const iconMarkup = action.payload?.icon_file
-    ? `<img src="/child/assets/icons/rewards/${action.payload.icon_file}.png" alt="" class="action-pending__icon-img">`
+    ? `<img src="${window.kcChildPath(`/assets/icons/rewards/${action.payload.icon_file}.png`)}" alt="" class="action-pending__icon-img">`
     : `<div class="action-pending__icon-emoji">${action.payload?.icon_emoji || '🎁'}</div>`;
   const costStr = action.payload?.coins_cost ? `${action.payload.coins_cost} 🪙` : '';
 
@@ -122,7 +122,9 @@ export function showActionPending(action, { childId }) {
 
     // 1. SSE subscription on the child channel
     try {
-      sseSource = new EventSource(`/api/child-events?child=${encodeURIComponent(childId)}`);
+      if (!window.kcStaticMode()) {
+        sseSource = new EventSource(`/api/child-events?child=${encodeURIComponent(childId)}`);
+      }
       sseSource.addEventListener('message', (e) => {
         let data;
         try { data = JSON.parse(e.data); } catch { return; }

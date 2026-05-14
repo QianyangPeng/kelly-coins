@@ -31,7 +31,7 @@ export function showSettings() {
 
   const styleCards = AVAILABLE_STYLES.map(style => {
     const isActive = style.id === currentStyle;
-    const previewSrc = `/child/assets/characters/styles/${style.id}/${style.preview}`;
+    const previewSrc = window.kcChildPath(`/assets/characters/styles/${style.id}/${style.preview}`);
     return `
       <button class="settings-style-card ${isActive ? 'settings-style-card--active' : ''}"
               data-style="${style.id}">

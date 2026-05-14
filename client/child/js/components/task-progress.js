@@ -35,7 +35,9 @@ export function showTaskProgress(task, onComplete) {
   accumulatedCoins = 0;
 
   const isTimed = task.duration_minutes && task.duration_minutes > 0;
-  const imgSrc = `/child/assets/icons/tasks/${task.id}.png`;
+  const imgSrc = task.icon_file
+    ? window.kcChildPath(`/assets/icons/tasks/${task.icon_file}.png`)
+    : window.kcChildPath(`/assets/icons/tasks/${task.id}.png`);
 
   backdropEl.innerHTML = `
     <div class="task-progress">

@@ -10,6 +10,7 @@
  */
 
 import { renderNav, setActiveNav, updateBadge } from './components/nav.js';
+import '../../shared/paths.js';
 import { getPending, getPendingActions, getChildren, getAuthStatus, getToken } from './api.js';
 import { showToast } from './components/toast.js';
 import { enablePush, disablePush } from './push.js';

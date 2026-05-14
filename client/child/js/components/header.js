@@ -43,7 +43,7 @@ export function createHeader() {
       </div>
     </div>
     <div class="header__coins" aria-label="当前金币">
-      <img src="/child/assets/ui/coin.png" alt="coin" class="header__coin-icon"
+      <img src="${window.kcChildPath('/assets/ui/coin.png')}" alt="coin" class="header__coin-icon"
            onerror="this.outerHTML='<span class=&quot;header__coin-icon&quot;>🪙</span>'">
       <span class="header__coin-count" aria-live="polite" aria-atomic="true">0</span>
     </div>

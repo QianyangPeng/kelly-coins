@@ -16,7 +16,8 @@
  *   - Only works over HTTPS (or localhost for dev).
  */
 
-import { subscribeToPush, unsubscribeFromPush } from './api.js';
+import { subscribeToPush, unsubscribeFromPush, isStaticRuntime } from './api.js';
+import { parentPath } from '../../shared/paths.js';
 
 const DEVICE_ID_KEY = 'parent-device-id';
 
@@ -66,9 +67,10 @@ export function isPushSupported() {
  */
 async function getRegistration() {
   if (!('serviceWorker' in navigator)) return null;
+  if (isStaticRuntime()) return null;
   try {
     // The index.html already calls register() on load; this call deduplicates.
-    const reg = await navigator.serviceWorker.register('/parent/sw.js', { scope: '/parent/' });
+    const reg = await navigator.serviceWorker.register(parentPath('/sw.js'), { scope: parentPath('/') });
     await navigator.serviceWorker.ready;
     return reg;
   } catch (e) {
@@ -83,6 +85,7 @@ async function getRegistration() {
  * Returns { ok, reason? }.
  */
 export async function enablePush(vapidPublicKey) {
+  if (isStaticRuntime()) return { ok: false, reason: 'static_mode' };
   if (!isPushSupported()) return { ok: false, reason: 'unsupported' };
   if (!vapidPublicKey)    return { ok: false, reason: 'no_vapid_key' };
 
@@ -127,8 +130,9 @@ export async function enablePush(vapidPublicKey) {
  */
 export async function disablePush() {
   if (!isPushSupported()) return;
+  if (isStaticRuntime()) return;
   try {
-    const reg = await navigator.serviceWorker.getRegistration('/parent/');
+    const reg = await navigator.serviceWorker.getRegistration(parentPath('/'));
     if (!reg) return;
     const sub = await reg.pushManager.getSubscription();
     if (!sub) return;

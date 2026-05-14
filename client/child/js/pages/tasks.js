@@ -99,7 +99,7 @@ function renderTaskCards(tasks) {
     // <img> tag so there's no empty `src` attribute that would trigger
     // a spurious error event.
     const iconMarkup = task.icon_file
-      ? `<img src="/child/assets/icons/tasks/${task.icon_file}.png"
+      ? `<img src="${window.kcChildPath(`/assets/icons/tasks/${task.icon_file}.png`)}"
              alt="${task.name}" class="card__icon-img"
              onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
          <div class="card__icon-emoji" style="display:none">${task.icon_emoji}</div>`

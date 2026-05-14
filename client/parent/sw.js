@@ -9,6 +9,10 @@
 const VERSION = 'kelly-parent-v1';
 const CACHE_NAME = `${VERSION}-shell`;
 
+function scoped(path = './') {
+  return new URL(path, self.registration.scope).toString();
+}
+
 // Minimal install step — just claim the clients immediately so push events
 // fire on first load instead of waiting for a reload.
 self.addEventListener('install', (event) => {
@@ -36,15 +40,15 @@ self.addEventListener('push', (event) => {
   const title = payload.title || 'Kelly Coins';
   const options = {
     body: payload.body || '有一个新的审批请求',
-    icon: '/parent/assets/icon-192.png',
-    badge: '/parent/assets/icon-192.png',
+    icon: scoped('assets/icon-192.png'),
+    badge: scoped('assets/icon-192.png'),
     tag: payload.tag || 'kelly-pending',
     // renotify: true means even if a notification with the same tag already
     // exists, a new one replaces it AND re-vibrates/re-sounds. Otherwise iOS
     // would silently collapse duplicates.
     renotify: true,
     data: {
-      url: payload.url || '/parent/#approvals',
+      url: payload.url || scoped('#approvals'),
       actionId: payload.actionId || null,
     },
     // Action buttons shown on the notification itself. iOS supports these
@@ -60,14 +64,14 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const target = event.notification.data?.url || '/parent/#approvals';
+  const target = event.notification.data?.url || scoped('#approvals');
   const action = event.action;
 
   event.waitUntil((async () => {
     const allClients = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
     // Prefer an already-open parent window; fall back to opening a new one.
     for (const client of allClients) {
-      if (client.url.includes('/parent/')) {
+      if (client.url.startsWith(self.registration.scope)) {
         await client.focus();
         // Tell the page which action was picked so it can jump straight to
         // the right approval and optionally auto-approve.

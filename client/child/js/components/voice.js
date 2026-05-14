@@ -5,18 +5,27 @@ const audioCache = new Map();
 let currentAudio = null;
 let speaking = false;
 
-// Check voice version on init to bust stale cache
-fetch('/api/tts/version').then(r => r.json()).then(d => {
-  const stored = localStorage.getItem('tts-voice-version');
-  if (stored && stored !== d.version) {
-    audioCache.clear();
-  }
-  localStorage.setItem('tts-voice-version', d.version);
-}).catch(() => {});
+// Check voice version on init to bust stale cache.
+if (!window.kcStaticMode()) {
+  fetch('/api/tts/version').then(r => r.json()).then(d => {
+    const stored = localStorage.getItem('tts-voice-version');
+    if (stored && stored !== d.version) {
+      audioCache.clear();
+    }
+    localStorage.setItem('tts-voice-version', d.version);
+  }).catch(() => {});
+}
 
 export async function speak(text, lang) {
   if (!text) return;
   cancelSpeak();
+
+  if (window.kcStaticMode() && 'speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = lang || 'zh-CN';
+    window.speechSynthesis.speak(utterance);
+    return;
+  }
 
   // Cache key must include language so "B" (English) and "B" (Chinese)
   // don't collide — edge-tts uses different voices per language.
@@ -98,6 +107,7 @@ export function isHighlighted(id) {
 }
 
 export function prewarm(phrases) {
+  if (window.kcStaticMode()) return;
   phrases.forEach(text => {
     const url = `/api/tts?text=${encodeURIComponent(text)}`;
     fetch(url).then(r => r.blob()).then(blob => {

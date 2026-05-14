@@ -74,7 +74,9 @@ async function playMessage(msg) {
     }
     currentAudio = new Audio(msg.audio_path);
     currentAudio.onended = async () => {
-      try { await fetch(`/api/voice-messages/${msg.id}/played`, { method: 'POST' }); } catch {}
+      if (!window.kcStaticMode()) {
+        try { await fetch(`/api/voice-messages/${msg.id}/played`, { method: 'POST' }); } catch {}
+      }
       hideBanner();
     };
     currentAudio.onerror = () => {

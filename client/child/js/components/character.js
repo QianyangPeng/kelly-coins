@@ -144,7 +144,7 @@ function applySkinTo(liveEl, skinId) {
   };
   testImg.onerror = () => {
     // Fallback: try the 'old' style if current style is missing this skin
-    const fallback = `/child/assets/characters/styles/old/${skinId || 'default'}.png`;
+    const fallback = window.kcChildPath(`/assets/characters/styles/old/${skinId || 'default'}.png`);
     const fallbackImg = new Image();
     fallbackImg.onload = () => {
       const layer = liveEl.querySelector('.char-layer');

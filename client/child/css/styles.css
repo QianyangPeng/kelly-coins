@@ -524,7 +524,7 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('/child/assets/ui/watercolor/paper-texture.png');
+  background-image: url('../assets/ui/watercolor/paper-texture.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -81,7 +81,9 @@ function renderRewardCards(rewards) {
       costVisual = `🪙 × ${reward.coins_cost}`;
     }
 
-    const imgSrc = `/child/assets/icons/rewards/${reward.id}.png`;
+    const imgSrc = reward.icon_file
+      ? window.kcChildPath(`/assets/icons/rewards/${reward.icon_file}.png`)
+      : window.kcChildPath(`/assets/icons/rewards/${reward.id}.png`);
     card.innerHTML = `
       <div class="reward-card__icon">
         <img src="${imgSrc}" alt="${reward.name}" class="card__icon-img"

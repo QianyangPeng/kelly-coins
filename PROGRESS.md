@@ -282,3 +282,31 @@ All previous candidates done. Good next directions:
   the new game modules.
 - Verified with `node --check` on changed JS/server files, HTTP 200 for `/`, HTTP 200
   for the new module, and a no-coin reward POST for `color-match`.
+
+---
+
+## 2026-05-14 update: GitHub Pages split + static mode
+- Corrected repo structure: `qianyangpeng.github.io` is only the personal homepage,
+  and Kelly Coins now lives in its own public repo: `QianyangPeng/kelly-coins`.
+- Removed the misplaced `kelly-coins/` subfolder from the personal homepage repo.
+- Added a GitHub Pages workflow that deploys `client/child`, `client/parent`, and
+  `client/shared` as a static artifact. Root `/kelly-coins/` redirects to the child UI;
+  `/kelly-coins/parent/` opens the simplified parent dashboard.
+- Added `client/shared/paths.js` so assets work from both local `/child/` and Pages
+  `/kelly-coins/child/`.
+- Added `client/shared/static-store.js` and wired child/parent API clients to use
+  localStorage automatically on GitHub Pages. Local Express mode still uses `/api/*`.
+- Simplified static parent mode: no PIN, push, or SSE requirement; approvals and CRUD
+  operate locally in the browser.
+- Verified staged/committed content has no `sk-proj-*` or `AIza*` strings and excludes
+  `.claude`, `server/openai-key.txt`, `kelly-coins.json`, Tailscale notes, runtime photos,
+  reports, backups, and generated output.
+- Verified with `node --check` over all client JS, headless Chrome on local static mode
+  (`/child/?static=1`, `/parent/?static=1`), and a simulated Pages path
+  (`/kelly-coins/child/?static=1`, `/kelly-coins/parent/?static=1`).
+
+Next start here:
+- Watch the GitHub Pages workflow after pushing. The expected URL is
+  `https://qianyangpeng.github.io/kelly-coins/`.
+- After Pages is live, add a Kelly Coins project card to the personal homepage repo
+  linking to `https://qianyangpeng.github.io/kelly-coins/`.

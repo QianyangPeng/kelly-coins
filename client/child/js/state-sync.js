@@ -20,6 +20,7 @@
 // when scope === 'earn' so a second device sees completed tasks).
 
 import { getChildId } from './api.js';
+import { isStaticMode } from '../../shared/paths.js';
 import { setState, getState } from './state.js';
 import { updateCharacter } from './components/character.js';
 
@@ -39,6 +40,7 @@ function dispatch(type, data) {
  * call multiple times; it no-ops unless the child id has changed.
  */
 export function initStateSync() {
+  if (isStaticMode()) return;
   const childId = getChildId();
   if (!childId) return;
   if (source && currentChild === childId && source.readyState !== EventSource.CLOSED) return;

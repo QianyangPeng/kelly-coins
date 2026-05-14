@@ -54,6 +54,7 @@ app.get('/parent/manifest.json', (_req, res) => {
 // Serve static client files (CSS, JS modules, assets)
 app.use('/child', express.static(path.join(__dirname, '..', 'client', 'child')));
 app.use('/parent', express.static(path.join(__dirname, '..', 'client', 'parent')));
+app.use('/shared', express.static(path.join(__dirname, '..', 'client', 'shared')));
 
 // HTML entry points
 app.get('/', (_req, res) => {

@@ -4,6 +4,7 @@
 // On phone: character only shown on home page
 
 import { setState, getState } from './state.js';
+import '../../shared/paths.js';
 import { setChildId } from './api.js';
 import * as api from './api.js';
 import { initRouter, registerPage, route } from './router.js';

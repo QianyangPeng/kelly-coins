@@ -14,6 +14,7 @@ import {
   getPending, approveRedemption, rejectRedemption,
   getPendingActions, approvePendingAction, rejectPendingAction,
 } from '../api.js';
+import { childPath } from '../../../shared/paths.js';
 import { showToast } from '../components/toast.js';
 import { confirm } from '../components/modal.js';
 import { updateBadge } from '../components/nav.js';
@@ -114,7 +115,7 @@ export default {
 
   _actionRow(a) {
     const iconHtml = a.payload?.icon_file
-      ? `<img src="/child/assets/icons/rewards/${a.payload.icon_file}.png" alt="" class="icon-thumb">`
+      ? `<img src="${childPath(`/assets/icons/rewards/${a.payload.icon_file}.png`)}" alt="" class="icon-thumb">`
       : (a.payload?.icon_emoji || '🎁');
     const verb = a.action_type === 'purchase'
       ? '想买'

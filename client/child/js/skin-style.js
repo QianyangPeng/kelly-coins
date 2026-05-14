@@ -39,7 +39,7 @@ export function setSkinStyle(styleId) {
 // Falls back gracefully if a style folder is missing the skin
 export function skinImageSrc(skinId, styleOverride = null) {
   const style = styleOverride || getSkinStyle();
-  return `/child/assets/characters/styles/${style}/${skinId || 'default'}.png`;
+  return window.kcChildPath(`/assets/characters/styles/${style}/${skinId || 'default'}.png`);
 }
 
 // Subscribe to style change events

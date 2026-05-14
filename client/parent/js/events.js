@@ -14,13 +14,14 @@
  *   - action-cancelled   (the child withdrew their own request)
  */
 
-import { getToken } from './api.js';
+import { getToken, isStaticRuntime } from './api.js';
 
 let source = null;
 const handlers = new Map(); // event type -> Set<handler>
 
 /** Open the SSE stream. Call after successful auth. Safe to call twice. */
 export function openStream() {
+  if (isStaticRuntime()) return;
   if (source && source.readyState !== EventSource.CLOSED) return;
   const token = getToken();
   if (!token) return;

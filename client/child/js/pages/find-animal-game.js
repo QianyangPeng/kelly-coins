@@ -126,7 +126,7 @@ export function createFindAnimalGame(containerEl, onEnd) {
       card.setAttribute('aria-label', item.name);
       card.innerHTML = `
         <div class="find-game__card-img-wrap">
-          <img src="/child/assets/icons/alphabet/${item.file}.png" alt="${item.name}" class="find-game__card-img">
+          <img src="${window.kcChildPath(`/assets/icons/alphabet/${item.file}.png`)}" alt="${item.name}" class="find-game__card-img">
         </div>
         <div class="find-game__card-label">${item.name}</div>
       `;

@@ -6,6 +6,7 @@
 import { getRewards, createReward, updateReward } from '../api.js';
 import { showToast } from '../components/toast.js';
 import { pickIcon, iconThumbHtml } from '../components/icon-picker.js';
+import { childPath } from '../../../shared/paths.js';
 
 let rewards = [];
 let draftIconFile = null;
@@ -122,7 +123,7 @@ export default {
     draftIconFile = key;
     const preview = document.getElementById('reward-new-icon-preview');
     if (preview) {
-      preview.innerHTML = `<img src="/child/assets/icons/rewards/${key}.png" alt="" style="width:24px;height:24px;vertical-align:middle;background:#FFF7EC;border-radius:4px;padding:2px">`;
+      preview.innerHTML = `<img src="${childPath(`/assets/icons/rewards/${key}.png`)}" alt="" style="width:24px;height:24px;vertical-align:middle;background:#FFF7EC;border-radius:4px;padding:2px">`;
     }
   },
 

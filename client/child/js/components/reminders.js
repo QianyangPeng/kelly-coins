@@ -84,7 +84,7 @@ function checkReminders() {
       try {
         new Notification(r.title, {
           body: r.body,
-          icon: '/child/assets/characters/styles/gacha/default.png',
+          icon: window.kcChildPath('/assets/characters/styles/gacha/default.png'),
           tag: `kelly-${r.id}`,
         });
         fired[key] = true;

@@ -20,7 +20,7 @@ export function coinBurst(sourceEl, amount) {
 
   // Big burst image centered behind the coins
   const burst = document.createElement('img');
-  burst.src = '/child/assets/ui/burst.png';
+  burst.src = window.kcChildPath('/assets/ui/burst.png');
   burst.className = 'anim-burst';
   burst.style.left = cx + 'px';
   burst.style.top = cy + 'px';
@@ -32,7 +32,7 @@ export function coinBurst(sourceEl, amount) {
   for (let i = 0; i < 10; i++) {
     const coin = document.createElement('img');
     coin.className = 'anim-coin anim-coin--img';
-    coin.src = '/child/assets/ui/coin.png';
+    coin.src = window.kcChildPath('/assets/ui/coin.png');
     coin.onerror = function() {
       // Fallback to emoji if image fails to load
       const span = document.createElement('div');

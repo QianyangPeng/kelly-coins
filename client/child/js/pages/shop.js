@@ -146,7 +146,7 @@ function renderItemCards(grid, items) {
       `道具：${item.name}，需要${item.coins_cost}金币${canAfford ? '' : `，还差${item.coins_cost - coins}金币`}`);
 
     const iconMarkup = item.icon_file
-      ? `<img src="/child/assets/icons/rewards/${item.icon_file}.png"
+      ? `<img src="${window.kcChildPath(`/assets/icons/rewards/${item.icon_file}.png`)}"
              alt="${item.name}" class="card__icon-img"
              onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
          <div class="card__icon-emoji" style="display:none">${item.icon_emoji}</div>`
@@ -259,7 +259,7 @@ function renderInventoryCards(grid, inventory) {
     card.setAttribute('aria-label', `背包道具：${item.name}${item.quantity > 1 ? `，数量${item.quantity}` : ''}，点击兑换`);
 
     const iconMarkup = item.icon_file
-      ? `<img src="/child/assets/icons/rewards/${item.icon_file}.png"
+      ? `<img src="${window.kcChildPath(`/assets/icons/rewards/${item.icon_file}.png`)}"
              alt="${item.name}" class="card__icon-img"
              onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
          <div class="card__icon-emoji" style="display:none">${item.icon_emoji}</div>`
@@ -311,4 +311,3 @@ async function doRedeemFromInventory(item) {
     showToast(e.message || '兑换失败 😢', 'error');
   }
 }
-

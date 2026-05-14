@@ -1,0 +1,85 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare static artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public
+          cp -R client/child public/child
+          cp -R client/parent public/parent
+          cp -R client/shared public/shared
+          touch public/.nojekyll
+          cat > public/index.html <<'HTML'
+          <!doctype html>
+          <html lang="zh-CN">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Kelly Coins</title>
+            <script>
+              location.replace('./child/' + location.search + location.hash);
+            </script>
+            <style>
+              body {
+                margin: 0;
+                min-height: 100vh;
+                display: grid;
+                place-items: center;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                background: #fff7ec;
+                color: #4a2e1e;
+              }
+              main { display: grid; gap: 12px; text-align: center; }
+              a { color: #8e3e5c; font-weight: 700; }
+            </style>
+          </head>
+          <body>
+            <main>
+              <h1>Kelly Coins</h1>
+              <a href="./child/">进入儿童端</a>
+              <a href="./parent/">进入家长端</a>
+            </main>
+          </body>
+          </html>
+          HTML
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

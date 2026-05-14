@@ -46,7 +46,7 @@ export async function showChildPicker() {
     <div class="cpicker-list">
       ${children.map(child => {
         const isActive = child.id === currentId;
-        const skinSrc = `/child/assets/characters/styles/watercolor/${child.equipped_skin || 'default'}.png`;
+        const skinSrc = window.kcChildPath(`/assets/characters/styles/watercolor/${child.equipped_skin || 'default'}.png`);
         return `
           <button class="cpicker-card ${isActive ? 'cpicker-card--active' : ''}"
                   data-id="${child.id}"

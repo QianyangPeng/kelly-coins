@@ -11,10 +11,17 @@
  *   if (key) task.icon_file = key;
  */
 
+import { isStaticMode, childPath } from '../../../shared/paths.js';
+import { iconCatalog } from '../../../shared/static-store.js';
+
 let catalogCache = null;
 
 async function loadCatalog() {
   if (catalogCache) return catalogCache;
+  if (isStaticMode()) {
+    catalogCache = iconCatalog().data;
+    return catalogCache;
+  }
   const res = await fetch('/api/icon-catalog');
   const data = await res.json();
   if (!data.success) throw new Error('failed to load icon catalog');
@@ -24,7 +31,7 @@ async function loadCatalog() {
 
 function iconAssetUrl(kind, key) {
   // Server-side: tasks live in /tasks/, rewards in /rewards/, shop in /shop/.
-  return `/child/assets/icons/${kind}/${key}.png`;
+  return childPath(`/assets/icons/${kind}/${key}.png`);
 }
 
 /**

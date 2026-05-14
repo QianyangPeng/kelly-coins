@@ -98,6 +98,9 @@ function getCurrentSeasonAndTime() {
 }
 
 async function fetchWeather() {
+  if (window.kcStaticMode()) {
+    return { condition: 'clear', is_day: true, temperature: 60, location: 'Kirkland, WA' };
+  }
   try {
     const res = await fetch('/api/weather');
     return await res.json();
@@ -122,8 +125,8 @@ async function refresh() {
 
 function setBackground(scene) {
   // Prefer watercolor set, fall back to original PNGs if missing
-  const url = `/child/assets/backgrounds/watercolor/${scene}.png`;
-  const fallback = `/child/assets/backgrounds/${scene}.png`;
+  const url = window.kcChildPath(`/assets/backgrounds/watercolor/${scene}.png`);
+  const fallback = window.kcChildPath(`/assets/backgrounds/${scene}.png`);
   const next = activeLayer === 'A' ? layerB : layerA;
   const current = activeLayer === 'A' ? layerA : layerB;
 
